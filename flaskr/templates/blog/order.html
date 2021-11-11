@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Orders{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<body>
+  <table>
+    <tr>
+      <th>order_number</th>
+      <th>sales's Name</th>
+      <th>customer's Name</th>
+      <th>price</th>
+      <th>order_date</th>
+      <th>vin</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order['order_number'] }}</td>
+      <td>{{ order[sname] }}</td>
+      <td>{{ order[cname] }}</td>
+      <td>{{ order['price'] }}</td>
+      <td>{{ order['order_date'] }}</td>
+      <td>{{ order['vin'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+{% endblock %}

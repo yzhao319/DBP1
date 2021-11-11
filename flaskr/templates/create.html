@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Inventories{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<body>
+  <label>color
+    <input type="text" id = "colorSearch">
+  </label>
+  <label>make
+    <input type="text" id = "makeSearch">
+  </label>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type=text/javascript>
+          $(function() {
+            $('a#search').on('click', function(e) {
+              e.preventDefault()
+              var colorSearch = document.getElementById("colorSearch").value;
+              var makeSearch = document.getElementById("makeSearch").value;
+
+              $.ajax({
+                method:"post",
+                url:"/search",
+                data:{color:colorSearch, make:makeSearch},
+                success:function(res){
+                  /* var tableBody = $("#Main tbody");
+                  inventories= res['res']
+
+                  tableBody.empty();
+                  var row = '<tr>';
+                  var col = '';
+                  for(var i=0;i<inventories.length;i++)
+                      col += '<td>'+inventories[i]['vin']+'</td>';
+                  row += '</tr>';
+                  row.appendTo(tableBody); */
+
+                  var tableBody = $("#Main tbody");
+                  tableBody.empty();
+
+                  inventories= res['res']
+
+                  var trHTML = '';
+                  trHTML += '<tr><th>' + 'vin' + '</th><th>' + 'color' + '</th><th>' + 'Make' + '</th><th>' + 'MSRP' + '</th></tr>'
+                  $.each(inventories, function (i, item) {
+                      trHTML += '<tr><td>' + item.vin + '</td><td>' + item.color + '</td><td>' + item.make + '</td><td>' + item.msrp + '</td></tr>';
+                  });
+                  $('#Main tbody').append(trHTML);
+                }
+            });
+            });
+          });
+  </script>
+  
+  <script type=text/javascript>
+    $(function() {
+      $('a#reset').on('click', function(e) {
+        e.preventDefault()
+
+
+        $.ajax({
+          method:"post",
+          url:"/reset",
+          data:{},
+          success:function(res){
+            /* var tableBody = $("#Main tbody");
+            inventories= res['res']
+
+            tableBody.empty();
+            var row = '<tr>';
+            var col = '';
+            for(var i=0;i<inventories.length;i++)
+                col += '<td>'+inventories[i]['vin']+'</td>';
+            row += '</tr>';
+            row.appendTo(tableBody); */
+
+            var tableBody = $("#Main tbody");
+            tableBody.empty();
+
+            inventories= res['res']
+
+            var trHTML = '';
+            trHTML += '<tr><th>' + 'vin' + '</th><th>' + 'color' + '</th><th>' + 'Make' + '</th><th>' + 'MSRP' + '</th></tr>'
+            $.each(inventories, function (i, item) {
+                trHTML += '<tr><td>' + item.vin + '</td><td>' + item.color + '</td><td>' + item.make + '</td><td>' + item.msrp + '</td></tr>';
+            });
+            $('#Main tbody').append(trHTML);
+          }
+      });
+      });
+    });
+</script>
+
+  <div class='container'>
+          <form>
+              <a href=# id=search><button class='btn btn-default'>Search</button></a>
+          </form>
+          <form>
+            <a href=# id=reset><button class='btn btn-default'>Reset</button></a>
+        </form>
+  
+  </div>
+  <form   action="{{ url_for('blog.inventory') }}" method=post>
+    <div id="Main" class="tabcontent" style="display:block" >
+      <div class="PanelWrapper" >
+        <div class="layout">
+          <div class="col">
+            <table>
+              <tr>
+                <th>vin</th>
+                <th>color</th>
+                <th>Make</th>
+                <th>MSRP</th>
+              </tr>
+              {% for inventory in inventories %}
+              <tr>
+                <td>{{ inventory['vin'] }}</td>
+                <td>{{ inventory['color'] }}</td>
+                <td>{{ inventory['make'] }}</td>
+                <td>{{ inventory['msrp'] }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+</body>
+{% endblock %}
