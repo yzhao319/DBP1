@@ -26,17 +26,6 @@
                 url:"/search",
                 data:{color:colorSearch, make:makeSearch},
                 success:function(res){
-                  /* var tableBody = $("#Main tbody");
-                  inventories= res['res']
-
-                  tableBody.empty();
-                  var row = '<tr>';
-                  var col = '';
-                  for(var i=0;i<inventories.length;i++)
-                      col += '<td>'+inventories[i]['vin']+'</td>';
-                  row += '</tr>';
-                  row.appendTo(tableBody); */
-
                   var tableBody = $("#Main tbody");
                   tableBody.empty();
 
@@ -58,24 +47,11 @@
     $(function() {
       $('a#reset').on('click', function(e) {
         e.preventDefault()
-
-
         $.ajax({
           method:"post",
           url:"/reset",
           data:{},
           success:function(res){
-            /* var tableBody = $("#Main tbody");
-            inventories= res['res']
-
-            tableBody.empty();
-            var row = '<tr>';
-            var col = '';
-            for(var i=0;i<inventories.length;i++)
-                col += '<td>'+inventories[i]['vin']+'</td>';
-            row += '</tr>';
-            row.appendTo(tableBody); */
-
             var tableBody = $("#Main tbody");
             tableBody.empty();
 
