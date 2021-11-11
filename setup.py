@@ -8,6 +8,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
-        'sqlalchemy'
+        'sqlalchemy',
+        "psycopg2-binary"
     ],
 )
